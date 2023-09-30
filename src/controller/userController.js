@@ -4,11 +4,16 @@ const dataBaseConfig = require('../config/database.js');
 
 async function CreateUser(req, res){
     try {
-        const { PASSWORD, NAME, EMAIL} = req.query;
+        console.log('req.body da api:', req.query);
+
+        const { PASSWORD, NOME, EMAIL} = req.query;
+        console.log( 'SENHA:', PASSWORD, 'NOME:' ,NOME, 'EMAIL:' , EMAIL)
+
+
         const connection = await mysql.createConnection(dataBaseConfig);
         const insertUser = ` INSERT INTO USER (PASSWORD,NAME,EMAIL) VALUES (?,?,?) `;
 
-        await connection.query(insertUser, [PASSWORD, NAME, EMAIL]);
+        await connection.query(insertUser, [PASSWORD, NOME, EMAIL]);
         await connection.end();
 
         res.status(201).send({ message: 'User created successfully!' });
